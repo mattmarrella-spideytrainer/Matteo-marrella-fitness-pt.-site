@@ -1,2 +1,666 @@
-# Matteo-marrella-fitness-pt.-site
-Sito per consulenze personal trainer online, Matteo Marrella 
+<!doctype html>
+<html lang="it">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="Personal Trainer certificato — Coaching e allenamenti. Prenota una consulenza gratuita." />
+  <title>Spidey PT — Personal Trainer</title>
+
+  <style>
+    :root{
+      --blue:#0b1f4b;
+      --blue2:#071633;
+      --red:#e31837;
+      --red2:#b80f2a;
+      --text:#ffffff;
+      --muted:rgba(255,255,255,.78);
+      --card:rgba(255,255,255,.08);
+      --stroke:rgba(255,255,255,.14);
+      --shadow: 0 18px 50px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1120px;
+    }
+
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      color:var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      background:
+        radial-gradient(1200px 700px at 15% 10%, rgba(227,24,55,.35), transparent 55%),
+        radial-gradient(900px 600px at 85% 15%, rgba(11,31,75,.7), transparent 60%),
+        linear-gradient(145deg, var(--blue2), var(--blue));
+      overflow-x:hidden;
+    }
+
+    /* Subtle web pattern */
+    .web{
+      position:fixed; inset:-200px;
+      background-image:
+        radial-gradient(circle at 50% 50%, rgba(255,255,255,.06) 1px, transparent 1px);
+      background-size: 34px 34px;
+      transform: rotate(8deg);
+      pointer-events:none;
+      opacity:.35;
+      mix-blend-mode: overlay;
+    }
+
+    a{color:inherit}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 18px}
+
+    /* Top bar */
+    header{
+      position:sticky; top:0; z-index:20;
+      backdrop-filter: blur(12px);
+      background: linear-gradient(90deg, rgba(7,22,51,.72), rgba(227,24,55,.14));
+      border-bottom: 1px solid var(--stroke);
+    }
+    .top{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0;
+      gap:14px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:12px;
+      text-decoration:none;
+    }
+    .logo{
+      width:38px; height:38px; border-radius:12px;
+      background: conic-gradient(from 210deg, var(--red), var(--red2), #ff3a57, var(--red));
+      box-shadow: 0 10px 30px rgba(227,24,55,.25);
+      border:1px solid rgba(255,255,255,.22);
+      position:relative;
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:7px;
+      border-radius:10px;
+      background: linear-gradient(135deg, rgba(255,255,255,.22), rgba(255,255,255,0));
+      opacity:.55;
+    }
+    .brand strong{letter-spacing:.3px}
+    .brand small{display:block; color:var(--muted); font-size:12px; margin-top:1px}
+
+    nav{display:flex; gap:12px; align-items:center; flex-wrap:wrap; justify-content:flex-end}
+    .navlink{
+      text-decoration:none;
+      color:rgba(255,255,255,.86);
+      font-weight:600;
+      font-size:14px;
+      padding:10px 12px;
+      border-radius:12px;
+      border:1px solid transparent;
+      transition:.2s ease;
+    }
+    .navlink:hover{
+      border-color: rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 14px;
+      border-radius: 14px;
+      text-decoration:none;
+      font-weight:800;
+      letter-spacing:.2px;
+      border:1px solid rgba(255,255,255,.18);
+      transition: transform .12s ease, filter .2s ease, background .2s ease;
+      user-select:none;
+      cursor:pointer;
+    }
+    .btn:active{transform: scale(.98)}
+    .btn-primary{
+      background: linear-gradient(135deg, var(--red), var(--red2));
+      box-shadow: 0 18px 45px rgba(227,24,55,.22);
+      border-color: rgba(255,255,255,.2);
+    }
+    .btn-primary:hover{filter: brightness(1.08)}
+    .btn-ghost{
+      background: rgba(255,255,255,.06);
+    }
+    .btn-ghost:hover{background: rgba(255,255,255,.09)}
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+      color: rgba(255,255,255,.88);
+      font-weight:700;
+      font-size:13px;
+    }
+    .dot{
+      width:9px; height:9px; border-radius:999px;
+      background: var(--red);
+      box-shadow: 0 0 0 4px rgba(227,24,55,.22);
+    }
+
+    /* Hero */
+    .hero{
+      padding: 54px 0 26px;
+      position:relative;
+    }
+    .hero-grid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap: 18px;
+      align-items:stretch;
+    }
+    @media (max-width: 920px){
+      .hero-grid{grid-template-columns:1fr; gap:14px}
+      nav{display:none}
+    }
+
+    .panel{
+      border-radius: var(--radius);
+      border:1px solid var(--stroke);
+      background: linear-gradient(180deg, rgba(255,255,255,.07), rgba(255,255,255,.03));
+      box-shadow: var(--shadow);
+    }
+
+    .hero-left{
+      padding: 26px 22px;
+      overflow:hidden;
+      position:relative;
+    }
+    .split{
+      position:absolute; inset:-2px;
+      background:
+        linear-gradient(90deg, rgba(11,31,75,.0) 0%, rgba(11,31,75,.0) 42%, rgba(227,24,55,.18) 42%, rgba(227,24,55,.18) 100%);
+      pointer-events:none;
+    }
+    .hero-left h1{
+      margin: 14px 0 10px;
+      font-size: clamp(30px, 4vw, 52px);
+      line-height:1.02;
+      letter-spacing:-.6px;
+    }
+    .hero-left p{
+      margin:0 0 18px;
+      color: var(--muted);
+      font-size: 16px;
+      line-height:1.55;
+      max-width: 58ch;
+    }
+    .cta-row{display:flex; gap:10px; flex-wrap:wrap; margin-top:16px}
+
+    .stats{
+      margin-top:16px;
+      display:flex; gap:10px; flex-wrap:wrap;
+    }
+    .stat{
+      padding:12px 14px;
+      border-radius: 14px;
+      background: rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.14);
+      min-width: 170px;
+    }
+    .stat strong{display:block; font-size:18px}
+    .stat span{display:block; color:var(--muted); font-size:12px; margin-top:4px}
+
+    .hero-right{
+      padding: 22px;
+      display:flex;
+      flex-direction:column;
+      gap:12px;
+    }
+    .card{
+      padding: 16px;
+      border-radius: 16px;
+      border:1px solid rgba(255,255,255,.14);
+      background: rgba(255,255,255,.05);
+    }
+    .card h3{margin:0 0 8px; font-size:16px}
+    .card p{margin:0; color:var(--muted); font-size:14px; line-height:1.55}
+
+    .mini{
+      display:flex; gap:12px; align-items:center;
+    }
+    .avatar{
+      width:54px; height:54px; border-radius:16px;
+      background:
+        radial-gradient(circle at 30% 30%, rgba(255,255,255,.25), transparent 55%),
+        linear-gradient(135deg, rgba(227,24,55,.9), rgba(11,31,75,.85));
+      border:1px solid rgba(255,255,255,.18);
+    }
+
+    /* Sections */
+    section{padding: 22px 0}
+    .section-title{
+      display:flex; align-items:flex-end; justify-content:space-between;
+      gap: 12px; margin-bottom: 10px;
+    }
+    .section-title h2{
+      margin:0;
+      font-size: 22px;
+      letter-spacing: -.2px;
+    }
+    .section-title p{
+      margin:0; color:var(--muted); font-size:14px;
+      max-width: 55ch;
+    }
+
+    .grid-3{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+    }
+    @media (max-width: 920px){
+      .grid-3{grid-template-columns:1fr}
+    }
+
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding: 8px 10px;
+      border-radius: 999px;
+      background: rgba(227,24,55,.12);
+      border: 1px solid rgba(227,24,55,.28);
+      color: rgba(255,255,255,.92);
+      font-weight:800;
+      font-size: 12px;
+      letter-spacing:.2px;
+    }
+    .tag .tiny{width:8px; height:8px; border-radius:999px; background: var(--red)}
+
+    .service strong{display:block; font-size:16px; margin-bottom:6px}
+    .service ul{margin:10px 0 0; padding-left: 18px; color: var(--muted); font-size:14px; line-height:1.6}
+    .service li{margin:6px 0}
+
+    /* Testimonials */
+    .quote{
+      font-size:14px; color:var(--muted); line-height:1.6;
+    }
+    .who{
+      margin-top:10px;
+      display:flex; align-items:center; justify-content:space-between;
+      gap:12px;
+      font-size:13px; color:rgba(255,255,255,.86);
+    }
+    .who span{color:var(--muted); font-size:12px}
+
+    /* Booking */
+    .booking{
+      padding: 22px;
+      position:relative;
+      overflow:hidden;
+    }
+    .booking:before{
+      content:"";
+      position:absolute; inset:-2px;
+      background: radial-gradient(700px 300px at 20% 20%, rgba(227,24,55,.22), transparent 60%),
+                  radial-gradient(700px 300px at 80% 60%, rgba(255,255,255,.12), transparent 55%);
+      pointer-events:none;
+    }
+    .booking-inner{position:relative; display:grid; grid-template-columns: 1.15fr .85fr; gap:14px}
+    @media (max-width: 920px){ .booking-inner{grid-template-columns:1fr} }
+
+    .form{
+      display:grid;
+      gap:10px;
+      margin-top:10px;
+    }
+    .field{
+      display:grid;
+      gap:6px;
+    }
+    label{font-size:12px; color:rgba(255,255,255,.84); font-weight:800; letter-spacing:.2px}
+    input, textarea, select{
+      width:100%;
+      padding: 12px 12px;
+      border-radius: 14px;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(0,0,0,.18);
+      color: var(--text);
+      outline: none;
+    }
+    textarea{min-height: 110px; resize: vertical}
+    input:focus, textarea:focus, select:focus{
+      border-color: rgba(227,24,55,.6);
+      box-shadow: 0 0 0 4px rgba(227,24,55,.16);
+    }
+
+    footer{
+      padding: 28px 0 40px;
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid rgba(255,255,255,.12);
+      margin-top: 10px;
+    }
+    .foot{
+      display:flex; justify-content:space-between; gap:12px; flex-wrap:wrap;
+      align-items:center;
+    }
+    .ig{
+      display:inline-flex; align-items:center; gap:10px;
+      text-decoration:none;
+      padding: 10px 12px;
+      border-radius: 14px;
+      border:1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.06);
+    }
+  </style>
+</head>
+
+<body>
+  <div class="web" aria-hidden="true"></div>
+
+  <header>
+    <div class="wrap">
+      <div class="top">
+        <a class="brand" href="#top">
+          <div class="logo" aria-hidden="true"></div>
+          <div>
+            <strong>Spidey PT</strong>
+            <small>Personal Trainer certificato • Coaching & performance</small>
+          </div>
+        </a>
+
+        <nav>
+          <a class="navlink" href="#chi-sono">Chi sono</a>
+          <a class="navlink" href="#servizi">Servizi</a>
+          <a class="navlink" href="#risultati">Risultati</a>
+          <a class="navlink" href="#prenota">Consulenza</a>
+          <a class="btn btn-primary" href="#prenota">Prenota gratis</a>
+        </nav>
+
+        <a class="btn btn-primary" href="#prenota" style="display:none" id="mobileCta">Prenota gratis</a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <div class="wrap">
+      <!-- HERO -->
+      <section class="hero">
+        <div class="hero-grid">
+          <div class="panel hero-left">
+            <div class="split" aria-hidden="true"></div>
+            <div class="pill"><span class="dot"></span> Disponibile per nuovi percorsi</div>
+
+            <h1>Trasforma corpo e testa. <br/>Metodo da atleta, vibe da Spidey.</h1>
+            <p>
+              Sono un <strong>Personal Trainer certificato</strong>. Aiuto persone che si sentono “bloccate” a tornare
+              forti, atletiche e sicure — con un percorso serio, semplice da seguire e senza fuffa.
+            </p>
+
+            <div class="cta-row">
+              <a class="btn btn-primary" href="#prenota">Prenota consulenza gratuita</a>
+              <a class="btn btn-ghost" href="#servizi">Vedi come lavoro</a>
+            </div>
+
+            <div class="stats">
+              <div class="stat">
+                <strong>Allenamento</strong>
+                <span>palestra • corpo libero • performance</span>
+              </div>
+              <div class="stat">
+                <strong>Coaching</strong>
+                <span>check foto/video + supporto in chat</span>
+              </div>
+              <div class="stat">
+                <strong>Obiettivo</strong>
+                <span>atleticità + estetica + benessere</span>
+              </div>
+            </div>
+          </div>
+
+          <aside class="panel hero-right">
+            <div class="card mini">
+              <div class="avatar" aria-hidden="true"></div>
+              <div>
+                <h3 style="margin:0 0 4px;">Chi sei tu (quick)</h3>
+                <p style="margin:0">
+                  Se ti svegli stanco, ti guardi allo specchio e non ti riconosci… ok. Qui ci lavoriamo sul serio.
+                </p>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Il mio metodo</h3>
+              <p>Progressione chiara, tecnica pulita, carichi intelligenti. E soprattutto: costanza guidata.</p>
+            </div>
+
+            <div class="card">
+              <h3>Consulenza gratuita</h3>
+              <p>15–20 minuti: capiamo obiettivo, livello e incastri. Ti dico subito se e come posso aiutarti.</p>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- CHI SONO -->
+      <section id="chi-sono">
+        <div class="section-title">
+          <div>
+            <h2>Chi sono</h2>
+            <p>Qui mettiamo la tua storia vera, senza frasi da “coach motivazionale” finto.</p>
+          </div>
+          <div class="tag"><span class="tiny"></span> Personal Trainer certificato</div>
+        </div>
+
+        <div class="grid-3">
+          <div class="panel card">
+            <h3>In due righe</h3>
+            <p>
+              <strong>[Inserisci nome]</strong> — PT e coach. Lavoro su forza, estetica e performance.
+              Il focus è farti tornare <em>atletico</em> e non “solo dimagrito”.
+            </p>
+          </div>
+
+          <div class="panel card">
+            <h3>La mia storia (placeholder)</h3>
+            <p>
+              Da qui scriviamo: da dove parti, perché lo fai, cosa ti ha cambiato la vita nell’allenamento,
+              e perché oggi sei ossessionato (in modo sano) dai risultati.
+            </p>
+          </div>
+
+          <div class="panel card">
+            <h3>Per chi è</h3>
+            <p>
+              Persone tra 18 e 35+ che si sentono demotivate, hanno abitudini pessime e vogliono riprendere controllo.
+              Non serve essere già allenati.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVIZI -->
+      <section id="servizi">
+        <div class="section-title">
+          <div>
+            <h2>Servizi</h2>
+            <p>Scegli il percorso giusto. Se sbagli scelta, ti fai male o molli: io evito entrambe le cose.</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="panel card service">
+            <strong>Personal Training (dal vivo)</strong>
+            <div class="tag" style="margin-top:6px"><span class="tiny"></span> Tecnica + progressione</div>
+            <ul>
+              <li>Valutazione iniziale + obiettivo</li>
+              <li>Programma su misura</li>
+              <li>Correzioni in tempo reale</li>
+            </ul>
+          </div>
+
+          <div class="panel card service">
+            <strong>Coaching Online</strong>
+            <div class="tag" style="margin-top:6px"><span class="tiny"></span> Check costanti</div>
+            <ul>
+              <li>Allenamenti + carichi aggiornati</li>
+              <li>Feedback su video</li>
+              <li>Supporto via messaggi</li>
+            </ul>
+          </div>
+
+          <div class="panel card service">
+            <strong>Performance & atletismo</strong>
+            <div class="tag" style="margin-top:6px"><span class="tiny"></span> Forza + esplosività</div>
+            <ul>
+              <li>Forza neurale e power</li>
+              <li>Pliometria e sprint</li>
+              <li>Mobilità “che serve davvero”</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- RISULTATI -->
+      <section id="risultati">
+        <div class="section-title">
+          <div>
+            <h2>Risultati e feedback</h2>
+            <p>Qui puoi mettere screenshot recensioni o prima/dopo (anche 3 bastano).</p>
+          </div>
+        </div>
+
+        <div class="grid-3">
+          <div class="panel card">
+            <div class="quote">“In 8 settimane mi sono rimesso in carreggiata. Programma chiaro, zero confusione.”</div>
+            <div class="who"><strong>Cliente A</strong><span>ricomposizione</span></div>
+          </div>
+          <div class="panel card">
+            <div class="quote">“Pensavo di non essere costante. Invece era il metodo che mancava.”</div>
+            <div class="who"><strong>Cliente B</strong><span>forza + abitudini</span></div>
+          </div>
+          <div class="panel card">
+            <div class="quote">“Ho ripreso a correre senza sentirmi un rottame. Mobilità e progressione perfette.”</div>
+            <div class="who"><strong>Cliente C</strong><span>performance</span></div>
+          </div>
+        </div>
+      </section>
+
+      <!-- PRENOTA -->
+      <section id="prenota">
+        <div class="panel booking">
+          <div class="booking-inner">
+            <div>
+              <div class="section-title" style="margin-bottom:6px">
+                <div>
+                  <h2>Prenota la consulenza gratuita</h2>
+                  <p>Compila 3 cose e ti preparo già la direzione giusta. Poi ci sentiamo e decidiamo.</p>
+                </div>
+              </div>
+
+              <form class="form" id="leadForm">
+                <div class="field">
+                  <label for="name">Nome</label>
+                  <input id="name" name="name" placeholder="Es. Matteo" required />
+                </div>
+
+                <div class="field">
+                  <label for="goal">Obiettivo principale</label>
+                  <select id="goal" name="goal" required>
+                    <option value="" disabled selected>Scegli...</option>
+                    <option>Dimagrimento / ricomposizione</option>
+                    <option>Aumento massa / forza</option>
+                    <option>Performance / atletismo</option>
+                    <option>Benessere / abitudini</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="msg">Messaggio (2 righe)</label>
+                  <textarea id="msg" name="msg" placeholder="Es. Mi alleno 2 volte a settimana, voglio tornare costante e definito…"></textarea>
+                </div>
+
+                <div class="cta-row">
+                  <button class="btn btn-primary" type="submit">Invia su WhatsApp</button>
+                  <a class="btn btn-ghost" href="#" id="calendlyLink">Oppure prenota su Calendly</a>
+                </div>
+
+                <p style="margin:8px 0 0; color:var(--muted); font-size:12px; line-height:1.45;">
+                  * Nessuno spam. Se non sei un match, te lo dico e fine.
+                </p>
+              </form>
+            </div>
+
+            <div class="card">
+              <h3>Contatti rapidi</h3>
+              <p>
+                Instagram: <a href="#" id="igLink">@tuoInstagram</a><br/>
+                Email: <a href="mailto:tuamail@email.com">tuamail@email.com</a><br/><br/>
+                <strong>Tip:</strong> metti qui la città / zona se fai personal dal vivo.
+              </p>
+
+              <hr style="border:0; border-top:1px solid rgba(255,255,255,.14); margin:14px 0">
+
+              <h3>Come funziona</h3>
+              <p>
+                1) mi mandi obiettivo e contesto<br/>
+                2) facciamo 15–20 min di call/chat<br/>
+                3) ti propongo il percorso (se ha senso)
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <footer>
+        <div class="wrap foot">
+          <div>© <span id="year"></span> Spidey PT • Tutti i diritti riservati</div>
+          <a class="ig" href="#" id="igBtn" aria-label="Apri Instagram">
+            <span style="font-weight:900">Instagram</span>
+            <span style="color:var(--muted)">→</span>
+          </a>
+        </div>
+      </footer>
+    </div>
+  </main>
+
+  <script>
+    // ====== PERSONALIZZA QUI (3 cose e sei a posto) ======
+    const CONFIG = {
+      instagramUrl: "https://instagram.com/tuo_profilo", // <-- cambia
+      instagramHandle: "@tuoInstagram",                  // <-- cambia
+      whatsappNumber: "39XXXXXXXXXX",                    // <-- cambia (solo numeri, con prefisso paese)
+      calendlyUrl: "https://calendly.com/tuo-link",      // <-- cambia (o lascia "#")
+      brandName: "Spidey PT"
+    };
+
+    // Mobile CTA show (solo estetica)
+    const mobileCta = document.getElementById("mobileCta");
+    const mq = window.matchMedia("(max-width: 920px)");
+    function toggleMobileCta(){ mobileCta.style.display = mq.matches ? "inline-flex" : "none"; }
+    toggleMobileCta(); mq.addEventListener("change", toggleMobileCta);
+
+    // Set links
+    const igLink = document.getElementById("igLink");
+    const igBtn  = document.getElementById("igBtn");
+    igLink.textContent = CONFIG.instagramHandle;
+    igLink.href = CONFIG.instagramUrl;
+    igBtn.href  = CONFIG.instagramUrl;
+
+    const calendlyLink = document.getElementById("calendlyLink");
+    calendlyLink.href = CONFIG.calendlyUrl;
+    calendlyLink.target = "_blank";
+    calendlyLink.rel = "noopener";
+
+    // Year
+    document.getElementById("year").textContent = new Date().getFullYear();
+
+    // WhatsApp lead form
+    const form = document.getElementById("leadForm");
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      const name = document.getElementById("name").value.trim();
+      const goal = document.getElementById("goal").value.trim();
+      const msg  = document.getElementById("msg").value.trim();
+
+      const text =
+`Ciao ${CONFIG.brandName}! Sono ${name}.
+Obiettivo: ${goal}.
+Messaggio: ${msg || "—"}
+Vorrei prenotare la consulenza gratuita.`;
+
+      const waUrl = `https://wa.me/${CONFIG.whatsappNumber}?text=${encodeURIComponent(text)}`;
+      window.open(waUrl, "_blank", "noopener");
+    });
+  </script>
+</body>
+</html>
